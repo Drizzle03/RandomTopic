@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>� 스몰토크 주제 추천</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">✨ 오늘의 스몰토크</h1>
+        <div class="cards-container">
+            <div class="card card-side">
+                <div class="card-inner">
+                    <div class="card-back">
+                        <span class="card-pattern">❔</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card card-main">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-content">
+                            <span class="card-title">💭 오늘의 스몰토크 주제</span>
+                            <p id="topic">새로운 주제를 받아보세요 👋</p>
+                            <span class="card-emoji">🗣️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card card-side">
+                <div class="card-inner">
+                    <div class="card-back">
+                        <span class="card-pattern">❔</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="refresh-btn">
+            <i class="fas fa-sync-alt"></i>
+            <span>새로운 주제 뽑기</span>
+        </button>
+    </div>
+    <script src="/static/topics.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+</html> 
+

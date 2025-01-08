@@ -1,0 +1,207 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 2rem;
+    letter-spacing: -0.03em;
+}
+
+.cards-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    perspective: 1000px;
+    transition: gap 0.3s ease;
+}
+
+.card {
+    height: 400px;
+    transition: all 0.3s ease;
+}
+
+.card-main {
+    width: 300px;
+    z-index: 2;
+}
+
+.card-side {
+    width: 260px;
+    transform: scale(0.9);
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: linear-gradient(135deg, #6c5ce7, #a363d9);
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-pattern {
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #555;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #6c5ce7, #a363d9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#topic {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #2d3436;
+    font-weight: 600;
+    word-break: keep-all;
+    width: 100%;
+    text-align: center;
+    letter-spacing: -0.03em;
+}
+
+.card-emoji {
+    font-size: 2rem;
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+#refresh-btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+    background: linear-gradient(135deg, #6c5ce7, #a363d9);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.2);
+}
+
+#refresh-btn i {
+    transition: transform 0.3s ease;
+}
+
+#refresh-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.3);
+}
+
+#refresh-btn:hover i {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        gap: 10px;
+    }
+    
+    .card-main {
+        width: 280px;
+    }
+    
+    .card-side {
+        width: 240px;
+        transform: scale(0.85);
+    }
+}
+
+@media (max-width: 640px) {
+    .card-side {
+        display: none;
+    }
+    
+    .card-main {
+        width: 300px;
+    }
+}
+
+@keyframes cardShuffle {
+    0% { transform: scale(0.9) translateY(0); }
+    50% { transform: scale(0.9) translateY(-10px); }
+    100% { transform: scale(0.9) translateY(0); }
+}
+
+.card-side {
+    animation: cardShuffle 3s ease-in-out infinite;
+}
+
+.card-side:first-child {
+    animation-delay: -1.5s;
+}
