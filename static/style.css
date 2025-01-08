@@ -182,7 +182,8 @@ body {
     gap: 8px;
     font-weight: 700;
     box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+    white-space: nowrap;
 }
 
 #refresh-btn i {
