@@ -5,22 +5,20 @@ document.getElementById('refresh-btn').addEventListener('click', function() {
         card.style.opacity = '0';
         setTimeout(() => {
             card.style.display = 'none';
-        }, 300); // 페이드 아웃 애니메이션 후 완전히 숨김
+        }, 300);
     });
 
-    // 메인 카드 중앙 정렬을 위한 컨테이너 스타일 조정
     const cardsContainer = document.querySelector('.cards-container');
     cardsContainer.style.gap = '0';
 
     const mainCard = document.querySelector('.card-main .card-inner');
     mainCard.style.transform = 'rotateY(180deg)';
     
-    fetch('/get_topic')
-        .then(response => response.json())
-        .then(data => {
-            setTimeout(() => {
-                document.getElementById('topic').textContent = data.topic;
-                mainCard.style.transform = 'rotateY(360deg)';
-            }, 300);
-        });
-}); 
+    // Flask 서버 대신 직접 topics 배열에서 랜덤 선택
+    const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+    
+    setTimeout(() => {
+        document.getElementById('topic').textContent = randomTopic;
+        mainCard.style.transform = 'rotateY(360deg)';
+    }, 300);
+});
