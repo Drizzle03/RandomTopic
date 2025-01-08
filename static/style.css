@@ -14,17 +14,24 @@ body {
 }
 
 .container {
-    text-align: center;
-    width: 100%;
-    max-width: 800px;
-    padding: 20px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: space-between;
-    position: relative;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.button-container {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    text-align: center;
+    z-index: 1000;
+    padding: 0 20px;
 }
 
 .logo-image {
@@ -41,8 +48,12 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
     color: #ffffff;
+    margin-bottom: 10px;
     letter-spacing: -0.03em;
-    margin-top: 60px; /* 상단 여백 증가 */
+    margin-top: 20px;
+    text-align: center;
+    margin-top: 40px;
+    padding-bottom: 20px;
 }
 
 .cards-container {
@@ -50,7 +61,8 @@ body {
     gap: 20px;
     align-items: center;
     justify-content: center;
-    flex-grow: 1;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .card {
@@ -153,6 +165,10 @@ body {
 }
 
 #refresh-btn {
+    display: inline-block;
+    max-width: 300px;
+    width: 100%;
+    box-sizing: border-box;
     padding: 14px 28px;
     font-size: 1rem;
     background: linear-gradient(135deg, #ffd700, #ffb300);
@@ -161,13 +177,12 @@ body {
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     font-weight: 700;
     box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
-    margin-bottom: 20px;
+    margin-bottom: 60px;
 }
 
 #refresh-btn i {
@@ -184,17 +199,16 @@ body {
 }
 
 @media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
     .cards-container {
-        flex-direction: column;
+        margin: 20px auto;
     }
     
-    .card-main, .card-side {
-        width: 100%;
-        max-width: 300px;
-    }
-    
-    .main-title {
-        font-size: 1.2rem;
+    .button-container {
+        bottom: 10px;
     }
     
     #refresh-btn {
