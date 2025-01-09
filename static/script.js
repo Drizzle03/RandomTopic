@@ -22,3 +22,7 @@ document.getElementById('refresh-btn').addEventListener('click', function() {
         mainCard.style.transform = 'rotateY(360deg)';
     }, 300);
 });
+
+document.querySelector('.card-main').addEventListener('click', function() {
+    document.getElementById('refresh-btn').click();
+});

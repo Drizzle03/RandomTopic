@@ -24,11 +24,9 @@ body {
 }
 
 .button-container {
-    position: absolute;
-    bottom: 20px;
+    position: fixed;
+    bottom: 80px;
     left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
     transform: translateX(-50%);
     width: 90%;
     max-width: 300px;
@@ -213,15 +211,9 @@ body {
     }
     
     .button-container {
-        bottom: 20px;
-        width: 100%;
+        bottom: 100px;
+        width: 90%;
         padding: 0 20px;
-        position: fixed;
-        left: 50%;
-        -webkit-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
-        transform: translateX(-50%);
-        z-index: 1000;
     }
     
     #refresh-btn {
@@ -300,8 +292,8 @@ body {
 
 .footer {
     position: fixed;
-    bottom: 8px;
-    right: 8px;
+    bottom: 20px;
+    right: 20px;
     padding: 6px 12px;
     text-align: right;
     background: rgba(26, 26, 26, 0.6);
