@@ -250,3 +250,26 @@ body {
 .card-side:hover .card-pattern {
     opacity: 0.5;
 }
+
+#feedback-btn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    transition: background 0.3s ease;
+    text-decoration: none;
+    opacity: 0.7;
+}
+
+#feedback-btn:hover {
+    background: #444;
+    opacity: 1;
+}
