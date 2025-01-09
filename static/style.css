@@ -209,7 +209,13 @@ body {
     }
     
     .button-container {
-        bottom: 10px;
+        bottom: 20px;
+        width: 100%;
+        padding: 0 20px;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
     }
     
     #refresh-btn {
