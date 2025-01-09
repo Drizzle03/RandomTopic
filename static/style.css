@@ -64,6 +64,8 @@ body {
     justify-content: center;
     margin-top: 10px;
     margin-bottom: 20px;
+    min-height: 400px;
+    padding: 20px;
 }
 
 .card {
@@ -81,6 +83,8 @@ body {
     z-index: 2;
     border: 2px solid #ffd700;
     background: rgba(28, 28, 28, 0.95);
+    position: relative;
+    transform: translateZ(0);
 }
 
 .card-side {
@@ -203,11 +207,23 @@ body {
 
 @media (max-width: 768px) {
     .container {
-        padding: 20px;
+        min-height: 100vh;
+        justify-content: center;
     }
     
     .cards-container {
-        margin: 20px auto;
+        min-height: 60vh;
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .card-main {
+        height: 400px;
+        margin: 0 auto;
+    }
+    
+    .card-side {
+        display: none;
     }
     
     .button-container {
