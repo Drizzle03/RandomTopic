@@ -27,11 +27,41 @@
     <meta property="og:image" content="https://gentletalk.netlify.app/images/card.png" />
     <meta property="og:url" content="https://gentletalk.netlify.app/" />
     <meta property="og:type" content="website" />
+    
+    <!-- Google Translate API 추가 -->
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'ko',
+                includedLanguages: 'en,ja,zh-CN,vi,th,es,fr,de', // 지원할 언어 코드
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: true
+            }, 'google_translate_element');
+        }
+        
+        // 브라우저 언어 감지 및 자동 번역
+        window.addEventListener('load', function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            const langCode = userLang.split('-')[0]; // 'en-US'에서 'en'만 추출
+            
+            if (langCode !== 'ko') {
+                const intervalId = setInterval(() => {
+                    const select = document.querySelector('.goog-te-combo');
+                    if (select) {
+                        select.value = langCode;
+                        select.dispatchEvent(new Event('change'));
+                        clearInterval(intervalId);
+                    }
+                }, 100);
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="container">
         <h1 class="main-title">✨스몰토크 주제추천 사이트 젠틀톡</h1>
-        <h2 class="sub-title">다양한 상황별 대화 주제 추천</h2>
         <div class="cards-container">
             <div class="card card-side">
                 <div class="card-inner">
@@ -79,5 +109,8 @@
     </footer>
     <script src="./static/topics.js"></script>
     <script src="./static/script.js"></script>
+    
+    <!-- 번역 위젯 추가 -->
+    <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px;"></div>
 </body>
 </html> 
