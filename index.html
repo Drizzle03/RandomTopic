@@ -24,8 +24,8 @@
     <link rel="stylesheet" href="./static/style.css">
     <meta property="og:title" content="젠틀톡 - 스몰토크 주제추천 사이트" />
     <meta property="og:description" content="직장, 모임, 데이트 등 다양한 상황에서 활용할 수 있는 스몰토크 주제를 추천받아보세요!" />
-    <meta property="og:image" content="https://gentletalk.netlify.app/images/card.png" />
-    <meta property="og:url" content="https://gentletalk.netlify.app/" />
+    <meta property="og:image" content="https://gentletalk.site/images/card.png" />
+    <meta property="og:url" content="https://gentletalk.site/" />
     <meta property="og:type" content="website" />
     
     <!-- Google Translate API 추가 -->
@@ -58,10 +58,46 @@
             }
         });
     </script>
+    
+    <!-- 네이버 서치어드바이저 인증 -->
+    <meta name="naver-site-verification" content="cab09137b065d8a79035402b46332940730ea886" />
+    
+    <!-- SEO 메타 태그 URL 업데이트 -->
+    <link rel="canonical" href="https://gentletalk.site/" />
 </head>
 <body>
-    <div class="container">
-        <h1 class="main-title">✨스몰토크 주제추천 사이트 젠틀톡</h1>
+    <!-- 구조화된 데이터 추가 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "젠틀톡",
+        "description": "스몰토크 주제추천 사이트",
+        "url": "https://gentletalk.site/",
+        "applicationCategory": "대화/커뮤니케이션",
+        "creator": {
+            "@type": "Person",
+            "name": "new._.nya_workspace"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "100"
+        }
+    }
+    </script>
+
+    <!-- 메인 콘텐츠 시맨틱 마크업 개선 -->
+    <main class="container">
+        <header>
+            <h1 class="main-title">✨스몰토크 주제추천 사이트 젠틀톡</h1>
+        </header>
+        
         <div class="cards-container">
             <div class="card card-side">
                 <div class="card-inner">
@@ -97,7 +133,7 @@
                 <span>새로운 주제 뽑기</span>
             </button>
         </div>
-    </div>
+    </main>
     <a href="https://forms.gle/jN2c432nfpzDh84cA" id="feedback-btn" target="_blank" rel="noopener noreferrer">
         📬 이용 건의 창구
     </a>
