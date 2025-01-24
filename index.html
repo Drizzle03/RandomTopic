@@ -169,6 +169,35 @@
                     });
                 }
             }
+            
+            // UTM 정보를 페이지에 표시하는 함수
+            function displayUtmInfo() {
+                const utmDiv = document.createElement('div');
+                utmDiv.style.position = 'fixed';
+                utmDiv.style.bottom = '10px';
+                utmDiv.style.left = '10px';
+                utmDiv.style.background = 'rgba(0,0,0,0.8)';
+                utmDiv.style.color = 'white';
+                utmDiv.style.padding = '10px';
+                utmDiv.style.borderRadius = '5px';
+                utmDiv.style.fontSize = '12px';
+                utmDiv.style.zIndex = '9999';
+                
+                const utmInfo = `
+                    Source: ${urlParams.get('utm_source') || 'none'}<br>
+                    Medium: ${urlParams.get('utm_medium') || 'none'}<br>
+                    Campaign: ${urlParams.get('utm_campaign') || 'none'}<br>
+                    Referrer: ${referrerDomain || 'direct'}
+                `;
+                
+                utmDiv.innerHTML = utmInfo;
+                document.body.appendChild(utmDiv);
+            }
+            
+            // 개발 환경에서만 표시 (선택적)
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                displayUtmInfo();
+            }
         });
     </script>
 </head>
