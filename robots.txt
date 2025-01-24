@@ -1,0 +1,27 @@
+# robots.txt for GentleTalk
+
+User-agent: *
+Allow: /
+Allow: /sitemap.xml
+
+# 캐시 파일 및 불필요한 경로 차단
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*?*
+
+# 이미지 및 리소스 접근 허용
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.png$
+Allow: /*.css$
+Allow: /*.js$
+
+# 사이트맵 위치 지정
+Sitemap: https://gentletalk.netlify.app/sitemap.xml
+
+# 크롤링 딜레이 설정 (선택사항)
+Crawl-delay: 1 
