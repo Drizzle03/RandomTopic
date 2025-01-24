@@ -64,6 +64,113 @@
     
     <!-- SEO 메타 태그 URL 업데이트 -->
     <link rel="canonical" href="https://gentletalk.site/" />
+    
+    <!-- UTM 트래킹 스크립트 추가 -->
+    <script>
+        window.addEventListener('load', function() {
+            // 레퍼러 정보 가져오기
+            const referrer = document.referrer;
+            
+            // 현재 URL 파라미터 가져오기
+            const currentUrl = new URL(window.location.href);
+            const urlParams = currentUrl.searchParams;
+            
+            // 이미 UTM 파라미터가 있다면 건너뛰기
+            if (urlParams.get('utm_source')) {
+                return;
+            }
+            
+            // 레퍼러 도메인 추출
+            let referrerDomain = '';
+            try {
+                referrerDomain = new URL(referrer).hostname;
+            } catch (e) {
+                referrerDomain = '';
+            }
+            
+            // UTM 파라미터 설정
+            let utmParams = {};
+            
+            // 소셜 미디어
+            if (referrerDomain.includes('instagram.com')) {
+                utmParams = {
+                    utm_source: 'instagram',
+                    utm_medium: 'social',
+                    utm_campaign: 'organic'
+                };
+            } else if (referrerDomain.includes('facebook.com')) {
+                utmParams = {
+                    utm_source: 'facebook',
+                    utm_medium: 'social',
+                    utm_campaign: 'organic'
+                };
+            }
+            // 검색엔진
+            else if (referrerDomain.includes('google.')) {
+                utmParams = {
+                    utm_source: 'google',
+                    utm_medium: 'organic',
+                    utm_campaign: 'search'
+                };
+            } else if (referrerDomain.includes('naver.com')) {
+                utmParams = {
+                    utm_source: 'naver',
+                    utm_medium: 'organic',
+                    utm_campaign: 'search'
+                };
+            }
+            // 블로그
+            else if (referrerDomain.includes('blog.naver.com')) {
+                utmParams = {
+                    utm_source: 'naver',
+                    utm_medium: 'blog',
+                    utm_campaign: 'organic'
+                };
+            } else if (referrerDomain.includes('tistory.com')) {
+                utmParams = {
+                    utm_source: 'tistory',
+                    utm_medium: 'blog',
+                    utm_campaign: 'organic'
+                };
+            }
+            // 직접 접속
+            else if (!referrerDomain) {
+                utmParams = {
+                    utm_source: 'direct',
+                    utm_medium: 'none',
+                    utm_campaign: 'direct'
+                };
+            }
+            // 기타 레퍼러
+            else {
+                utmParams = {
+                    utm_source: referrerDomain,
+                    utm_medium: 'referral',
+                    utm_campaign: 'organic'
+                };
+            }
+            
+            // UTM 파라미터가 설정되었다면 URL 업데이트
+            if (Object.keys(utmParams).length > 0) {
+                // 현재 URL의 파라미터 유지하면서 UTM 추가
+                for (let [key, value] of Object.entries(utmParams)) {
+                    urlParams.set(key, value);
+                }
+                
+                // URL 업데이트 (히스토리 변경 없이)
+                const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+                window.history.replaceState({}, '', newUrl);
+                
+                // Google Analytics에 이벤트 전송
+                if (typeof gtag === 'function') {
+                    gtag('event', 'page_view', {
+                        page_location: window.location.href,
+                        page_referrer: referrer
+                    });
+                }
+            }
+        });
+    </script>
 </head>
 <body>
     <!-- 구조화된 데이터 추가 -->
