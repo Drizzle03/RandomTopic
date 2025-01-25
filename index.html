@@ -150,17 +150,8 @@
                 };
             }
             
-            // UTM 파라미터가 설정되었다면 URL 업데이트
+            // UTM 파라미터가 설정되었다면 GA에만 이벤트 전송
             if (Object.keys(utmParams).length > 0) {
-                // 현재 URL의 파라미터 유지하면서 UTM 추가
-                for (let [key, value] of Object.entries(utmParams)) {
-                    urlParams.set(key, value);
-                }
-                
-                // URL 업데이트 (히스토리 변경 없이)
-                const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-                window.history.replaceState({}, '', newUrl);
-                
                 // Google Analytics에 이벤트 전송
                 if (typeof gtag === 'function') {
                     gtag('event', 'page_view', {
@@ -169,37 +160,32 @@
                     });
                 }
             }
-            
-            // UTM 정보를 페이지에 표시하는 함수
-            function displayUtmInfo() {
-                const utmDiv = document.createElement('div');
-                utmDiv.style.position = 'fixed';
-                utmDiv.style.bottom = '10px';
-                utmDiv.style.left = '10px';
-                utmDiv.style.background = 'rgba(0,0,0,0.8)';
-                utmDiv.style.color = 'white';
-                utmDiv.style.padding = '10px';
-                utmDiv.style.borderRadius = '5px';
-                utmDiv.style.fontSize = '12px';
-                utmDiv.style.zIndex = '9999';
-                
-                const utmInfo = `
-                    Source: ${urlParams.get('utm_source') || 'none'}<br>
-                    Medium: ${urlParams.get('utm_medium') || 'none'}<br>
-                    Campaign: ${urlParams.get('utm_campaign') || 'none'}<br>
-                    Referrer: ${referrerDomain || 'direct'}
-                `;
-                
-                utmDiv.innerHTML = utmInfo;
-                document.body.appendChild(utmDiv);
-            }
-            
-            // 개발 환경에서만 표시 (선택적)
-            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                displayUtmInfo();
-            }
         });
     </script>
+    
+    <!-- Google Translate 위젯 스타일 수정 -->
+    <style>
+        #google_translate_element {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+        
+        /* 모바일 환경에서의 스타일 조정 */
+        @media (max-width: 768px) {
+            #google_translate_element {
+                top: 5px;
+                left: 5px;
+            }
+            
+            /* 번역 위젯 크기 최적화 */
+            .goog-te-combo {
+                font-size: 14px;
+                padding: 4px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- 구조화된 데이터 추가 -->
@@ -274,7 +260,7 @@
         📬 이용 건의 창구
     </a>
     <footer class="footer">
-        <p class="version">v1.0.7</p>
+        <p class="version">v1.0.9</p>
         <a href="https://instagram.com/new._.nya_workspace" target="_blank" rel="noopener noreferrer" class="developer-link">
             @new._.nya_workspace
         </a>
@@ -282,7 +268,7 @@
     <script src="./static/topics.js"></script>
     <script src="./static/script.js"></script>
     
-    <!-- 번역 위젯 추가 -->
-    <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px;"></div>
+    <!-- 번역 위젯 위치 변경 -->
+    <div id="google_translate_element"></div>
 </body>
 </html> 
