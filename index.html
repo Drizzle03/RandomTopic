@@ -146,45 +146,12 @@
         });
     </script>
     
+    <!-- html2canvas 라이브러리 추가 -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
     <style>
-        /* 공유 버튼 스타일 (인스타그램만 남김) */
-        .share-buttons {
-            display: none;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.3s, transform 0.3s;
-        }
-        
-        .share-buttons.visible {
-            display: flex;
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .share-button {
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 14px;
-            transition: opacity 0.2s;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .share-button:active {
-            opacity: 0.7;
-        }
-        
-        .instagram-share {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            color: white;
-        }
+        /* 공유 버튼 관련 스타일 제거 */
+        /* 캡쳐 관련 스타일 제거 */
     </style>
 </head>
 <body>
@@ -254,14 +221,6 @@
                 <i class="fas fa-sync-alt"></i>
                 <span>새로운 주제 뽑기</span>
             </button>
-            
-            <!-- 인스타그램 공유 버튼만 남김 -->
-            <div class="share-buttons">
-                <button class="share-button instagram-share" onclick="shareToInstagram()">
-                    <i class="fab fa-instagram"></i>
-                    인스타그램 스토리
-                </button>
-            </div>
         </div>
     </main>
     <a href="https://forms.gle/jN2c432nfpzDh84cA" id="feedback-btn" target="_blank" rel="noopener noreferrer">
@@ -279,22 +238,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const refreshBtn = document.getElementById('refresh-btn');
-            const shareButtons = document.querySelector('.share-buttons');
             const topicElement = document.getElementById('topic');
             
-            // 초기 상태 설정
-            shareButtons.style.display = 'none';
-            
-            // 새로운 주제 생성 시 공유 버튼 표시
             refreshBtn.addEventListener('click', function() {
                 generateNewTopic();
-                
-                setTimeout(() => {
-                    shareButtons.style.display = 'flex';
-                    requestAnimationFrame(() => {
-                        shareButtons.classList.add('visible');
-                    });
-                }, 300);
             });
             
             function generateNewTopic() {
@@ -302,28 +249,6 @@
                 topicElement.textContent = randomTopic;
             }
         });
-        
-        // 인스타그램 공유 함수
-        function shareToInstagram() {
-            const topic = document.getElementById('topic').textContent;
-            const shareUrl = addUtmToShareUrl('instagram');
-            
-            if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                window.location.href = `instagram://story-camera`;
-                
-                setTimeout(() => {
-                    window.location.href = `https://www.instagram.com/`;
-                }, 2000);
-            } else {
-                window.open('https://www.instagram.com/', '_blank');
-            }
-        }
-        
-        // UTM 파라미터 추가
-        function addUtmToShareUrl(platform) {
-            const baseUrl = 'https://gentletalk.site';
-            return `${baseUrl}?utm_source=${platform}&utm_medium=share&utm_campaign=topic_share`;
-        }
     </script>
 </body>
 </html> 
