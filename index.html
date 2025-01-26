@@ -37,7 +37,8 @@
                 pageLanguage: 'ko',
                 includedLanguages: 'en,ja,zh-CN,vi,th,es,fr,de', // 지원할 언어 코드
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: true
+                autoDisplay: false,
+                multilanguagePage: true
             }, 'google_translate_element');
         }
         
@@ -165,27 +166,156 @@
     
     <!-- Google Translate 위젯 스타일 수정 -->
     <style>
+        /* 번역 위젯 커스텀 스타일 */
         #google_translate_element {
             position: fixed;
             top: 10px;
             left: 10px;
             z-index: 1000;
+            opacity: 0.7;
+            transition: opacity 0.3s;
         }
         
-        /* 모바일 환경에서의 스타일 조정 */
+        #google_translate_element:hover {
+            opacity: 1;
+        }
+        
+        /* 번역 위젯 컨테이너 스타일 */
+        .translate-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            padding: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        /* 기본 위젯 스타일 숨기기 */
+        .goog-te-gadget {
+            font-family: 'Pretendard', sans-serif !important;
+        }
+        
+        .goog-te-gadget-simple {
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+        
+        .goog-te-gadget-simple > span > a > span:nth-child(1),
+        .goog-te-gadget-simple > span > a > span:nth-child(2) {
+            display: none !important;
+        }
+        
+        .goog-te-gadget .goog-te-combo {
+            margin: 0 !important;
+            padding: 4px !important;
+            border: none !important;
+            border-radius: 4px !important;
+            font-size: 14px !important;
+            background: transparent !important;
+            color: #333 !important;
+            outline: none !important;
+        }
+        
+        /* 모바일 최적화 */
         @media (max-width: 768px) {
             #google_translate_element {
                 top: 5px;
                 left: 5px;
             }
             
-            /* 번역 위젯 크기 최적화 */
-            .goog-te-combo {
-                font-size: 14px;
-                padding: 4px;
+            .translate-container {
+                padding: 6px;
+            }
+            
+            .goog-te-gadget .goog-te-combo {
+                font-size: 12px !important;
+                padding: 2px !important;
+            }
+        }
+        
+        /* 번역 아이콘 스타일 */
+        .translate-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 2px;
+            opacity: 0.7;
+        }
+        
+        /* 카드 선택 방지 스타일 */
+        .card {
+            -webkit-user-select: none;  /* Safari */
+            -ms-user-select: none;      /* IE 10+ */
+            user-select: none;          /* Standard syntax */
+            
+            -webkit-touch-callout: none;    /* iOS Safari */
+            -webkit-tap-highlight-color: transparent; /* 탭 하이라이트 제거 */
+        }
+        
+        /* 카드 내부 콘텐츠도 선택 방지 */
+        .card-content, 
+        .card-title, 
+        .card-front, 
+        .card-back,
+        .card-pattern {
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* 공유 버튼 스타일 */
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .share-button {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            transition: opacity 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .share-button:active {
+            opacity: 0.7;
+        }
+        
+        .kakao-share {
+            background-color: #FEE500;
+            color: #000000;
+        }
+        
+        .instagram-share {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+        }
+        
+        /* 모바일 최적화 */
+        @media (max-width: 768px) {
+            .share-buttons {
+                gap: 8px;
+            }
+            
+            .share-button {
+                padding: 6px 12px;
+                font-size: 13px;
             }
         }
     </style>
+    
+    <!-- 카카오 SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"></script>
 </head>
 <body>
     <!-- 구조화된 데이터 추가 -->
@@ -254,13 +384,26 @@
                 <i class="fas fa-sync-alt"></i>
                 <span>새로운 주제 뽑기</span>
             </button>
+            
+            <!-- 공유 버튼 추가 -->
+            <div class="share-buttons">
+                <button class="share-button kakao-share" onclick="shareToKakao()">
+                    <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" 
+                         alt="카카오톡 공유" width="18" height="18">
+                    카카오톡 공유
+                </button>
+                <button class="share-button instagram-share" onclick="shareToInstagram()">
+                    <i class="fab fa-instagram"></i>
+                    인스타그램 스토리
+                </button>
+            </div>
         </div>
     </main>
     <a href="https://forms.gle/jN2c432nfpzDh84cA" id="feedback-btn" target="_blank" rel="noopener noreferrer">
         📬 이용 건의 창구
     </a>
     <footer class="footer">
-        <p class="version">v1.0.9</p>
+        <p class="version">v1.1.0</p>
         <a href="https://instagram.com/new._.nya_workspace" target="_blank" rel="noopener noreferrer" class="developer-link">
             @new._.nya_workspace
         </a>
@@ -268,7 +411,70 @@
     <script src="./static/topics.js"></script>
     <script src="./static/script.js"></script>
     
-    <!-- 번역 위젯 위치 변경 -->
-    <div id="google_translate_element"></div>
+    <!-- 번역 위젯 컨테이너 수정 -->
+    <div id="google_translate_element">
+        <div class="translate-container">
+            <svg class="translate-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-2h-2v2zm3.1-7.6c-.1.3-.1.5-.2.7l-.7 1.7h-2.4l-.7-1.7c-.1-.2-.1-.4-.2-.7-.1-.3-.1-.5-.1-.7h-.6c0 .3 0 .6.1.9.1.3.1.5.2.7l1.6 3.8h2.1l1.6-3.8c.1-.2.1-.4.2-.7.1-.3.1-.6.1-.9h-.6c-.1.2-.2.5-.3.7z"/>
+            </svg>
+        </div>
+    </div>
+    
+    <script>
+        // 카카오 SDK 초기화
+        Kakao.init('fb7f3c71ccab5fc01de880dec69fe45c');
+        
+        // 카카오톡 공유 함수
+        function shareToKakao() {
+            const topic = document.getElementById('topic').textContent;
+            const shareUrl = addUtmToShareUrl('kakaotalk');
+            
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '💭 오늘의 스몰토크 주제',
+                    description: topic,
+                    imageUrl: 'https://gentletalk.site/images/card.png',
+                    link: {
+                        mobileWebUrl: shareUrl,
+                        webUrl: shareUrl
+                    },
+                },
+                buttons: [
+                    {
+                        title: '주제 더 보기',
+                        link: {
+                            mobileWebUrl: shareUrl,
+                            webUrl: shareUrl,
+                        },
+                    },
+                ],
+            });
+        }
+        
+        // 인스타그램 공유 함수
+        function shareToInstagram() {
+            const topic = document.getElementById('topic').textContent;
+            const shareUrl = addUtmToShareUrl('instagram');
+            const encodedText = encodeURIComponent(`💭 오늘의 스몰토크 주제:\n${topic}\n\n더 많은 주제 보기 👉 ${shareUrl}`);
+            
+            if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                window.location.href = `instagram://story-camera`;
+                
+                // 인스타그램 앱이 없는 경우를 위한 타임아웃 처리
+                setTimeout(() => {
+                    window.location.href = `https://www.instagram.com/`;
+                }, 2000);
+            } else {
+                window.open('https://www.instagram.com/', '_blank');
+            }
+        }
+        
+        // UTM 파라미터 추가
+        function addUtmToShareUrl(platform) {
+            const baseUrl = 'https://gentletalk.site';
+            return `${baseUrl}?utm_source=${platform}&utm_medium=share&utm_campaign=topic_share`;
+        }
+    </script>
 </body>
 </html> 
