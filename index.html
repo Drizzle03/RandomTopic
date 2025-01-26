@@ -132,50 +132,60 @@
         });
     </script>
     
-    <!-- Google Translate 위젯 스타일 수정 -->
-    <style>
-        #google_translate_element {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 1000;
-        }
-        
-        /* 모바일 환경에서의 스타일 조정 */
-        @media (max-width: 768px) {
-            #google_translate_element {
-                top: 5px;
-                left: 5px;
-            }
-            
-            /* 번역 위젯 크기 최적화 */
-            .goog-te-combo {
-                font-size: 14px;
-                padding: 4px;
-            }
-        }
-    </style>
-    
     <script>
-        // 브라우저 언어 감지 및 자동 번역
+        // 브라우저 언어 감지 및 자동 번역 제안
         window.addEventListener('load', function() {
             const userLang = navigator.language || navigator.userLanguage;
-            const langCode = userLang.split('-')[0]; // 'en-US'에서 'en'만 추출
+            const langCode = userLang.split('-')[0];
             
             // 한국어가 아닌 경우 자동 번역 제안
             if (langCode !== 'ko') {
-                // Chrome 브라우저의 자동 번역 트리거
                 document.documentElement.lang = 'ko';
                 document.documentElement.setAttribute('translate', 'yes');
-                
-                // 메타 태그로 번역 제안
-                const meta = document.createElement('meta');
-                meta.name = 'google';
-                meta.content = 'notranslate';
-                document.head.appendChild(meta);
             }
         });
     </script>
+    
+    <style>
+        /* 공유 버튼 스타일 (인스타그램만 남김) */
+        .share-buttons {
+            display: none;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .share-buttons.visible {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .share-button {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            transition: opacity 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .share-button:active {
+            opacity: 0.7;
+        }
+        
+        .instagram-share {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <!-- 구조화된 데이터 추가 -->
@@ -244,13 +254,21 @@
                 <i class="fas fa-sync-alt"></i>
                 <span>새로운 주제 뽑기</span>
             </button>
+            
+            <!-- 인스타그램 공유 버튼만 남김 -->
+            <div class="share-buttons">
+                <button class="share-button instagram-share" onclick="shareToInstagram()">
+                    <i class="fab fa-instagram"></i>
+                    인스타그램 스토리
+                </button>
+            </div>
         </div>
     </main>
     <a href="https://forms.gle/jN2c432nfpzDh84cA" id="feedback-btn" target="_blank" rel="noopener noreferrer">
         📬 이용 건의 창구
     </a>
     <footer class="footer">
-        <p class="version">v1.0.9</p>
+        <p class="version">v1.1.0</p>
         <a href="https://instagram.com/new._.nya_workspace" target="_blank" rel="noopener noreferrer" class="developer-link">
             @new._.nya_workspace
         </a>
@@ -258,8 +276,54 @@
     <script src="./static/topics.js"></script>
     <script src="./static/script.js"></script>
     
-    <!-- 번역 위젯 위치 변경 -->
-    <div id="google_translate_element"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const refreshBtn = document.getElementById('refresh-btn');
+            const shareButtons = document.querySelector('.share-buttons');
+            const topicElement = document.getElementById('topic');
+            
+            // 초기 상태 설정
+            shareButtons.style.display = 'none';
+            
+            // 새로운 주제 생성 시 공유 버튼 표시
+            refreshBtn.addEventListener('click', function() {
+                generateNewTopic();
+                
+                setTimeout(() => {
+                    shareButtons.style.display = 'flex';
+                    requestAnimationFrame(() => {
+                        shareButtons.classList.add('visible');
+                    });
+                }, 300);
+            });
+            
+            function generateNewTopic() {
+                const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+                topicElement.textContent = randomTopic;
+            }
+        });
+        
+        // 인스타그램 공유 함수
+        function shareToInstagram() {
+            const topic = document.getElementById('topic').textContent;
+            const shareUrl = addUtmToShareUrl('instagram');
+            
+            if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                window.location.href = `instagram://story-camera`;
+                
+                setTimeout(() => {
+                    window.location.href = `https://www.instagram.com/`;
+                }, 2000);
+            } else {
+                window.open('https://www.instagram.com/', '_blank');
+            }
+        }
+        
+        // UTM 파라미터 추가
+        function addUtmToShareUrl(platform) {
+            const baseUrl = 'https://gentletalk.site';
+            return `${baseUrl}?utm_source=${platform}&utm_medium=share&utm_campaign=topic_share`;
+        }
+    </script>
 </body>
 </html> 
-
