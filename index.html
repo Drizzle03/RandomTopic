@@ -28,37 +28,6 @@
     <meta property="og:url" content="https://gentletalk.site/" />
     <meta property="og:type" content="website" />
     
-    <!-- Google Translate API 추가 -->
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'ko',
-                includedLanguages: 'en,ja,zh-CN,vi,th,es,fr,de', // 지원할 언어 코드
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: true
-            }, 'google_translate_element');
-        }
-        
-        // 브라우저 언어 감지 및 자동 번역
-        window.addEventListener('load', function() {
-            const userLang = navigator.language || navigator.userLanguage;
-            const langCode = userLang.split('-')[0]; // 'en-US'에서 'en'만 추출
-            
-            if (langCode !== 'ko') {
-                const intervalId = setInterval(() => {
-                    const select = document.querySelector('.goog-te-combo');
-                    if (select) {
-                        select.value = langCode;
-                        select.dispatchEvent(new Event('change'));
-                        clearInterval(intervalId);
-                    }
-                }, 100);
-            }
-        });
-    </script>
-    
     <!-- 네이버 서치어드바이저 인증 -->
     <meta name="naver-site-verification" content="cab09137b065d8a79035402b46332940730ea886" />
     
@@ -186,6 +155,27 @@
             }
         }
     </style>
+    
+    <script>
+        // 브라우저 언어 감지 및 자동 번역
+        window.addEventListener('load', function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            const langCode = userLang.split('-')[0]; // 'en-US'에서 'en'만 추출
+            
+            // 한국어가 아닌 경우 자동 번역 제안
+            if (langCode !== 'ko') {
+                // Chrome 브라우저의 자동 번역 트리거
+                document.documentElement.lang = 'ko';
+                document.documentElement.setAttribute('translate', 'yes');
+                
+                // 메타 태그로 번역 제안
+                const meta = document.createElement('meta');
+                meta.name = 'google';
+                meta.content = 'notranslate';
+                document.head.appendChild(meta);
+            }
+        });
+    </script>
 </head>
 <body>
     <!-- 구조화된 데이터 추가 -->
@@ -272,3 +262,4 @@
     <div id="google_translate_element"></div>
 </body>
 </html> 
+
